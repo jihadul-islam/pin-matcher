@@ -1,63 +1,61 @@
 //pin generate
-const generate_pin_btn = document.querySelector('.generate-btn')
+const generate_pin_btn = document.getElementById('generate_pin_btn')
 generate_pin_btn.addEventListener('click',() =>{
    min =0
    max =9999;
   const pinCount =  ("0" + Math.floor(Math.random() * (max - min + 1)) + min).substr(-4);
-  document.getElementById('display_generate_pin').innerHTML= pinCount;
+  document.getElementById('generate_pin').innerHTML= pinCount;
    });
-
+   //submit velue
+   function submit_kyeboard(kye_number){
+    const num = parseInt(kye_number);
+    document.getElementById('submitOutput').value += num;
+}
 //pin submit
-
-
-   
     const submit_btn = document.querySelector('.submit-btn');
-        submit_btn.addEventListener('click', () => {
-            const display_generate_pin = document.getElementById('display_generate_pin').innerHTML;
-            const parseInt_display_generate_pin = parseInt(display_generate_pin);
-            const display_output = document.getElementById('display_output').value;
-            if (display_output.length == 0) {
-                alert('Your Pin Field Maybe Empty! Please Fill up Pin Field');
+        submit_btn.addEventListener('click', function () {
+            const generate_pin = document.getElementById('generate_pin').innerHTML;
+            const parseInt_generate_pin = parseInt(generate_pin);
+            const submitOutput = document.getElementById('submitOutput').value;
+           
+           if (parseInt_generate_pin == submitOutput  && submitOutput.length > 0) {
+              document.getElementById('pin_match').style.display = 'block';
+              document.getElementById('pin_not_match').style.display = 'none';
             }
-            else if (parseInt_display_generate_pin == display_output  && display_output.length > 0) {
-                document.getElementById('pin_match').style.display = 'block';
-                document.getElementById('pin_not_match').style.display = 'none';
-            }
-            else if (parseInt_display_generate_pin != display_output && display_output.length > 0) {
+            else if (parseInt_generate_pin != submitOutput && submitOutput.length > 0) {
                    
                 document.getElementById('pin_not_match').style.display = 'block';
                 document.getElementById('pin_match').style.display = 'none';
 
                 const try_left = document.getElementById('try_left').innerHTML;
-                const parseFloat_try_left =  parseFloat(try_left);
-                    if (parseFloat_try_left <= 3  && parseFloat_try_left > 1) {
-                        document.getElementById('try_left').innerHTML = parseFloat_try_left - 1;
+                const tryLeft =  parseFloat(try_left);
+                    if (tryLeft <= 3  && tryLeft > 1) {
+                        document.getElementById('try_left').innerHTML = tryLeft - 1;
                     }
-                    else if (parseFloat_try_left == 1) {
-                        const submit_btn = document.querySelector('.submit-btn');
+                    else if (tryLeft == 1) {
+                        const submit_btn = document.getElementById('submit-btn');
                         submit_btn.setAttribute('disabled', 'disabled');
-                        submit_btn.style.backgroundColor = 'black';
-                        console.log('submit btn disabled');
+                        submit_btn.style.backgroundColor = 'red';
                         document.getElementById('try_left').innerHTML = '0';
                     }          
             }  
+            
         });
 
-  //function that display value 
-  function display(digit_value){
-    const do_parse = parseInt(digit_value);
-    document.getElementById('display_output').value += do_parse;
-}
+  
+ 
 
-function removed_last_item() {
-    const removed_last_item = document.getElementById('display_output').value;
-    let  convert_number_to_string = removed_last_item.toString(removed_last_item.length);
-    convert_number_to_string = convert_number_to_string.slice(0, -1);
-    document.getElementById('display_output').value = convert_number_to_string;
-    console.log(convert_number_to_string);
-}
+//backSpace
+  function back_space() {
+      var back_space = document.getElementById('submitOutput').value;
+      var output = back_space.toString(back_space);
+        output= output.slice(0,-1);
+        document.getElementById("submitOutput").value =output;
+  }
 
-//function that clear the display_output field 
-function clear_display(){ 
-    document.getElementById("display_output").value = "" ;
-}
+function clear_submit_number(){ 
+    document.getElementById("submitOutput").value = "" ;
+};
+
+
+
